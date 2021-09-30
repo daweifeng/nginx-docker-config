@@ -8,10 +8,10 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "vhost:/etc/nginx/vhost.d"
-      - "html:/usr/share/nginx/html"
+      - "/etc/nginx/vhost.d"
+      - "/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "certs:/etc/nginx/certs"
+      - "/etc/nginx/certs"
       - "./custom_proxy-settings.conf:/etc/nginx/conf.d/custom_proxy-settings.conf"
 
   nginx-proxy-acme:

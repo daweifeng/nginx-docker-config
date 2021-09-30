@@ -8,17 +8,20 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "/etc/nginx/vhost.d"
-      - "/usr/share/nginx/html"
+      - "vhost:/etc/nginx/vhost.d"
+      - "html:/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "/etc/nginx/certs"
+      - "certs:/etc/nginx/certs"
       - "./custom_proxy-settings.conf:/etc/nginx/conf.d/custom_proxy-settings.conf"
 
-  letsencrypt-nginx-proxy-companion:
+  nginx-proxy-acme:
     restart: always
-    image: jrcs/letsencrypt-nginx-proxy-companion
+    image: nginxproxy/acme-companion
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "acme:/etc/acme.sh"
+    environment:
+      - DEFAULT_EMAIL=admin@beartech.io
     volumes_from:
       - "nginx-proxy"
 
